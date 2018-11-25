@@ -11,13 +11,13 @@ type TSP struct {
 	graph           *g.Graph
 	alpha           uint
 	beta            uint
-	evaporationRate float32
+	evaporationRate float64
 	ants            uint
 	generations     uint
 }
 
 // NewTSP : create a new TSP problem solver using ACO
-func NewTSP(graph *g.Graph, alpha, beta, ants, generations uint, evaporationRate float32) *TSP {
+func NewTSP(graph *g.Graph, alpha, beta, ants, generations uint, evaporationRate float64) *TSP {
 	var tsp TSP
 	tsp.graph = graph
 
@@ -35,6 +35,7 @@ func NewTSP(graph *g.Graph, alpha, beta, ants, generations uint, evaporationRate
 func (tsp *TSP) Run() {
 	var bestAnt *Ant
 	for i := 0; i < int(tsp.generations); i++ {
+		fmt.Println("Starting generation ", i)
 		ants := tsp.createAnts(tsp.ants)
 
 		bestAntOfGeneration := tsp.updateAntsPositions(ants)
@@ -59,9 +60,11 @@ func (tsp *TSP) createAnts(n uint) []*Ant {
 func (tsp *TSP) updateAntsPositions(ants []*Ant) *Ant {
 	var bestAnt *Ant
 	for i := 0; i < len(ants); i++ {
+		fmt.Println("Starting travel for ant ", i)
 		for !ants[i].IsTravelFinished() {
 			ants[i].Travel()
 		}
+		fmt.Println("Travel finished...")
 
 		// best ant is the one with lowest eval
 		if bestAnt == nil || bestAnt.Evaluate() > ants[i].Evaluate() {
