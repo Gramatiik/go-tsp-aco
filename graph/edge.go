@@ -7,6 +7,7 @@ type Edge struct {
 	First      *Vertex
 	Second     *Vertex
 	Pheromones float64
+	Weight     float64
 }
 
 // GetOppositeEnd : Return the opposite end vertex if both are connected

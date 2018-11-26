@@ -7,6 +7,7 @@ import (
 
 // Graph : Represents an non oriented graph with vertices and edges
 type Graph struct {
+	Name     string
 	Vertices map[float64]*Vertex
 	Edges    map[float64]*Edge
 	mut      sync.RWMutex
@@ -28,13 +29,8 @@ func (g *Graph) AddVertex(v *Vertex) {
 	g.mut.Unlock()
 }
 
-// IsEmpty : Returns true if the graph has no Vertices, returns false otherwise
-func (g *Graph) IsEmpty() bool {
-	return len(g.Vertices) == 0
-}
-
 // AddEdge : Add an edge between the two vertices
-func (g *Graph) AddEdge(v1, v2 *Vertex) {
+func (g *Graph) AddEdge(v1, v2 *Vertex) *Edge {
 	g.mut.Lock()
 	e := Edge{First: v1, Second: v2, Pheromones: 0.1}
 	if g.Edges == nil {
@@ -46,6 +42,13 @@ func (g *Graph) AddEdge(v1, v2 *Vertex) {
 		g.Edges[e.Hash()] = &e
 	}
 	g.mut.Unlock()
+
+	return &e
+}
+
+// IsEmpty : Returns true if the graph has no Vertices, returns false otherwise
+func (g *Graph) IsEmpty() bool {
+	return len(g.Vertices) == 0
 }
 
 // GetVerticesCount : total number of vertices in the graph
@@ -85,11 +88,13 @@ func (g *Graph) GetEdgesForVertex(v *Vertex) []*Edge {
 
 // GetEdgeBetweenVertices : return the edge between the given vertices, or nil if it's not present
 func (g *Graph) GetEdgeBetweenVertices(v1, v2 *Vertex) *Edge {
+	g.mut.Lock()
 	e := Edge{First: v1, Second: v2}
 
 	if _, present := g.Edges[e.Hash()]; !present {
 		return nil
 	}
 
+	defer g.mut.Unlock()
 	return g.Edges[e.Hash()]
 }
