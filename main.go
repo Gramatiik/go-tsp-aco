@@ -6,6 +6,9 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/briandowns/spinner"
+	"github.com/fatih/color"
+
 	"github.com/Gramatiik/go-tsp-aco/aco"
 	"github.com/Gramatiik/go-tsp-aco/dataset"
 	"github.com/Gramatiik/go-tsp-aco/graph"
@@ -51,15 +54,14 @@ func main() {
 	}
 
 	// Print a recap of the data
-	fmt.Println("Parameters :")
-	fmt.Println("\t- ANTS : ", *ants)
-	fmt.Println("\t- GENERATIONS : ", *generations)
-	fmt.Println("\t- ALPHA : ", *alpha)
-	fmt.Println("\t- BETA : ", *beta)
-	fmt.Println("\t- EVAPORATION RATE : ", *evaporationRate)
+	c := color.New(color.FgGreen, color.Bold)
+	d := color.New(color.FgCyan, color.Bold)
+	d.Println("\nParameters :")
+	d.Println("ANTS\tGENS\tALPHA\tBETA\tEVAP")
+	c.Printf("%d\t%d\t%d\t%d\t%.2f\n", *ants, *generations, *alpha, *beta, *evaporationRate)
 
-	fmt.Println("\nNumber of vertices : ", tspGraph.GetVerticesCount())
-	fmt.Println("Number of edges : ", tspGraph.GetEdgesCount())
+	fmt.Println("\nNumber of vertices : ", c.Sprintf("%d", tspGraph.GetVerticesCount()))
+	fmt.Println("Number of edges : ", c.Sprintf("%d", tspGraph.GetEdgesCount()))
 	fmt.Println("")
 
 	tsp := aco.NewTSP(
@@ -71,5 +73,13 @@ func main() {
 		*evaporationRate,
 	)
 
-	tsp.Run()
+	s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
+	s.Color("cyan")
+	s.Start()
+
+	// run the TSP solver and get the best ant
+	best := tsp.Run()
+
+	s.FinalMSG = fmt.Sprintf("Best ant did a tour of %s units\n", c.Sprintf("%.3f", best.Evaluate()))
+	s.Stop()
 }

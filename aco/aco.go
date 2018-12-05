@@ -40,7 +40,7 @@ func NewTSP(graph *g.Graph, alpha, beta, ants, generations uint, evaporationRate
 }
 
 // Run : start the TSP solving with the given parameters
-func (tsp *TSP) Run() {
+func (tsp *TSP) Run() *Ant {
 	var bestAnt *Ant
 	for i := 0; i < int(tsp.numberOfGenerations); i++ {
 		tsp.createAnts()
@@ -54,7 +54,7 @@ func (tsp *TSP) Run() {
 		}
 	}
 
-	fmt.Println("Best ant did a tour of length : ", bestAnt.Evaluate())
+	return bestAnt
 }
 
 func (tsp *TSP) createAnts() {
