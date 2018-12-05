@@ -1,7 +1,8 @@
 package dataset
 
-import g "../graph"
+import g "github.com/Gramatiik/go-tsp-aco/graph"
 
+// OLIVER30 is well known dataset for TSP problems
 var OLIVER30 = []*g.Vertex{
 	&g.Vertex{Name: "A", Position: g.Coords{X: 54, Y: 67}},
 	&g.Vertex{Name: "B", Position: g.Coords{X: 54, Y: 62}},

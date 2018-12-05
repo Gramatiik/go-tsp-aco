@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"../graph"
+	"github.com/Gramatiik/go-tsp-aco/graph"
 )
 
 const NAME = "NAME"

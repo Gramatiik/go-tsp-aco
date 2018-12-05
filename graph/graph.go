@@ -1,6 +1,8 @@
 package graph
 
 import (
+	"fmt"
+	"math"
 	"math/rand"
 	"sync"
 )
@@ -97,4 +99,58 @@ func (g *Graph) GetEdgeBetweenVertices(v1, v2 *Vertex) *Edge {
 
 	defer g.mut.Unlock()
 	return g.Edges[e.Hash()]
+}
+
+// Vertex represents a node element in a graph
+type Vertex struct {
+	Name     string
+	Position Coords
+}
+
+// String : returns a string representation of the vertex
+func (v *Vertex) String() string {
+	return fmt.Sprintf("%v", v.Name)
+}
+
+// Hash : hashcode for the vertex based on its coordinates
+func (v *Vertex) Hash() float64 {
+	return 31*v.Position.X + v.Position.Y
+}
+
+// Edge : represents an edge on the graph
+type Edge struct {
+	First      *Vertex
+	Second     *Vertex
+	Pheromones float64
+	Weight     float64
+}
+
+// GetOppositeEnd : Return the opposite end vertex if both are connected
+// returns nil otherwise
+func (e *Edge) GetOppositeEnd(v *Vertex) *Vertex {
+	if e.First == v {
+		return e.Second
+	} else if e.Second == v {
+		return e.First
+	} else {
+		return nil
+	}
+}
+
+// Hash : Identifying hash of the edge
+func (e *Edge) Hash() float64 {
+	return math.Sqrt(e.First.Hash()) + math.Sqrt(e.Second.Hash())
+}
+
+// Coords : Holds X/Y 2d coordinates
+type Coords struct {
+	X float64
+	Y float64
+}
+
+// DistanceTo : Calculates the distance between two coordinates
+func (c *Coords) DistanceTo(other *Coords) float64 {
+	dx := c.X - other.X
+	dy := c.Y - other.Y
+	return math.Sqrt(dx*dx + dy*dy)
 }

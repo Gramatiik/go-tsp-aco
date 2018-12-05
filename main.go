@@ -6,10 +6,10 @@ import (
 	"math/rand"
 	"time"
 
-	"./aco"
-	"./dataset"
-	g "./graph"
-	"./tsplib"
+	"github.com/Gramatiik/go-tsp-aco/aco"
+	"github.com/Gramatiik/go-tsp-aco/dataset"
+	"github.com/Gramatiik/go-tsp-aco/graph"
+	"github.com/Gramatiik/go-tsp-aco/tsplib"
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	flag.Parse()
 
 	// load the dataset (from file or the default one)
-	var vertices []*g.Vertex
+	var vertices []*graph.Vertex
 	if *filename != "" {
 		vertices = tsplib.LoadFromFile(*filename)
 	} else {
@@ -34,18 +34,18 @@ func main() {
 		vertices = dataset.OLIVER30
 	}
 
-	var graph g.Graph
+	var tspGraph graph.Graph
 
 	// Add vertices to the graph
 	for i := 0; i < len(vertices); i++ {
-		graph.AddVertex(vertices[i])
+		tspGraph.AddVertex(vertices[i])
 	}
 
 	// Create the connections between vertices (complete graph)
 	for i := 0; i < len(vertices); i++ {
 		for j := 0; j < len(vertices); j++ {
 			if vertices[i] != vertices[j] {
-				graph.AddEdge(vertices[i], vertices[j])
+				tspGraph.AddEdge(vertices[i], vertices[j])
 			}
 		}
 	}
@@ -58,12 +58,12 @@ func main() {
 	fmt.Println("\t- BETA : ", *beta)
 	fmt.Println("\t- EVAPORATION RATE : ", *evaporationRate)
 
-	fmt.Println("\nNumber of vertices : ", graph.GetVerticesCount())
-	fmt.Println("Number of edges : ", graph.GetEdgesCount())
+	fmt.Println("\nNumber of vertices : ", tspGraph.GetVerticesCount())
+	fmt.Println("Number of edges : ", tspGraph.GetEdgesCount())
 	fmt.Println("")
 
 	tsp := aco.NewTSP(
-		&graph,
+		&tspGraph,
 		*alpha,
 		*beta,
 		*ants,
