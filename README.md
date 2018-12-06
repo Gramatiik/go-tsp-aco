@@ -10,7 +10,7 @@ Download the latest version for macOS under the releases section
 
 ## Build from source
 
-> To build from source, you will need the [go language](https://golang.org/doc/install) compiler
+> To build from source, you will need the [go](https://golang.org/doc/install) compiler and the [vgo](https://github.com/golang/vgo) tool 
 
 Move to the project repository
 
@@ -22,8 +22,8 @@ $ cd go-tsp-aco
 ```
 
 ```bash
-$ go build main.go -o go-tsp-aco
+$ vgo build
 ```
 
-And voilà ! The compiler generated the binary file with the name `go-tsp-aco`
+And _voilà_ ! The compiler generated a binary named `go-tsp-aco` 🚀
 
