@@ -12,8 +12,6 @@ Download the latest version for macOS under the releases section
 
 > To build from source, you will need the [go](https://golang.org/doc/install) compiler and the [vgo](https://github.com/golang/vgo) tool 
 
-Move to the project repository
-
 Clone this repository and move to the sources directory
 
 ```console
