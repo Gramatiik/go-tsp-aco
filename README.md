@@ -16,12 +16,12 @@ Move to the project repository
 
 Clone this repository and move to the sources directory
 
-```bash
+```console
 $ git clone <repository-url> go-tsp-aco
 $ cd go-tsp-aco
 ```
 
-```bash
+```console
 $ vgo build
 ```
 
