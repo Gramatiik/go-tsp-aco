@@ -6,7 +6,7 @@ The main goal of this project was to produce a functional implementation of this
 
 ## Installation
 
-Download the [latest](/releases/latest) version for macOS under the [releases section](/releases)
+Download the [latest](https://github.com/Gramatiik/go-tsp-aco/releases/latest) version for macOS under the [releases section](https://github.com/Gramatiik/go-tsp-aco/releases)
 
 ### Build from source
 
