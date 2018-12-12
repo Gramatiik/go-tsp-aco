@@ -6,9 +6,9 @@ The main goal of this project was to produce a functional implementation of this
 
 ## Installation
 
-Download the latest version for macOS under the releases section
+Download the [latest](/releases/latest) version for macOS under the [releases section](/releases)
 
-## Build from source
+### Build from source
 
 > To build from source, you will need the [go](https://golang.org/doc/install) compiler and the [vgo](https://github.com/golang/vgo) tool 
 
@@ -25,3 +25,17 @@ $ vgo build
 
 And _voilà_ ! The compiler generated a binary named `go-tsp-aco` 🚀
 
+## Usage
+
+The following flags are available :
+- `-input` : loads the given `.tsp` file.
+- `-alpha` : value of the alpha parameter.
+- `-beta` : value of the beta parameter.
+- `-ants` : number of ants per generations.
+- `-generations` : number of generations to simulate.
+- `-evaporation` : value for the pheromones evaporation rate.
+- `-h or --help` : displays the help message.
+
+## Licence
+
+[MIT](/LICENSE.md)
