@@ -1,8 +1,10 @@
 # TSP solver using Ant Colony Optimization
 
-This project is a Go implementation of the **Ant System algorithm** proposed by M. Dorigo et al.
+This project is a **Go** implementation of the **Ant System algorithm** proposed by M. Dorigo et al.
 
 The main goal of this project was to produce a functional implementation of this algorithm and to test it against real world data to compare performance and accuracy of the algorithm. It was also a nice way to learn the basics of the Go language !
+
+> There's also a **Node.js** implementation available [here](https://github.com/dzetah/node-tsp-aco)!
 
 ## Installation
 
