@@ -7,12 +7,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Gramatiik/go-tsp-aco/graph"
+	"github.com/dzetah/go-tsp-aco/pkg/graph"
 )
 
-const NAME = "NAME"
-const COMMENT = "COMMENT"
-const NODE_COORD_SECTION = "NODE_COORD_SECTION"
+const delimiterName = "NAME"
+const delimiterComment = "COMMENT"
+const delimiterNodeCoordSection = "NODE_COORD_SECTION"
 
 // Basic error handler
 func check(e error) {
@@ -34,7 +34,7 @@ func LoadFromFile(filename string) []*graph.Vertex {
 		line := scanner.Text()
 
 		switch {
-		case strings.Contains(line, NODE_COORD_SECTION): // read coords section
+		case strings.Contains(line, delimiterNodeCoordSection): // read coords section
 			fmt.Println("parsing NODE_COORD_SECTION...")
 			scanner.Scan()
 			points = readNodeCoordSection(scanner)

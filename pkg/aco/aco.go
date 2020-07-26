@@ -5,7 +5,7 @@ import (
 	"math"
 	"math/rand"
 
-	g "github.com/Gramatiik/go-tsp-aco/graph"
+	g "github.com/dzetah/go-tsp-aco/pkg/graph"
 )
 
 // TSP : the TSP problem solver using AS algorithm
@@ -24,19 +24,16 @@ type TSP struct {
 
 // NewTSP : create a new TSP problem solver
 func NewTSP(graph *g.Graph, alpha, beta, ants, generations uint, evaporationRate float64) *TSP {
-	var tsp TSP
 
-	tsp.ants = []*Ant{}
-	tsp.graph = graph
-
-	tsp.alpha = alpha
-	tsp.beta = beta
-	tsp.evaporationRate = evaporationRate
-
-	tsp.numberOfAnts = ants
-	tsp.numberOfGenerations = generations
-
-	return &tsp
+	return &TSP{
+		graph:               graph,
+		ants:                []*Ant{},
+		alpha:               alpha,
+		beta:                beta,
+		evaporationRate:     evaporationRate,
+		numberOfAnts:        ants,
+		numberOfGenerations: generations,
+	}
 }
 
 // Run : start the TSP solving with the given parameters
@@ -45,7 +42,7 @@ func (tsp *TSP) Run() *Ant {
 	for i := 0; i < int(tsp.numberOfGenerations); i++ {
 		tsp.createAnts()
 
-		bestAntOfGeneration := tsp.updateAntsPositions()
+		bestAntOfGeneration := tsp.runGeneration()
 		tsp.evaporatePheromones()
 		tsp.updatePheromones()
 
@@ -57,13 +54,15 @@ func (tsp *TSP) Run() *Ant {
 	return bestAnt
 }
 
+// createAnts initializes the TSP ants with the right
 func (tsp *TSP) createAnts() {
 	for i := 0; i < int(tsp.numberOfAnts); i++ {
 		tsp.ants = append(tsp.ants, NewAnt(tsp.graph, tsp.alpha, tsp.beta))
 	}
 }
 
-func (tsp *TSP) updateAntsPositions() *Ant {
+// run the TSP for one generation and return the best ant of the generation
+func (tsp *TSP) runGeneration() *Ant {
 	var bestAnt *Ant
 	for i := 0; i < len(tsp.ants); i++ {
 		for !tsp.ants[i].IsTravelFinished() {
@@ -216,6 +215,7 @@ func (a *Ant) denominator(edges []*g.Edge) float64 {
 	for i := 0; i < len(edges); i++ {
 		denominator += a.desirability(edges[i])
 	}
+
 	return denominator
 }
 
@@ -223,5 +223,6 @@ func (a *Ant) denominator(edges []*g.Edge) float64 {
 func (a *Ant) desirability(edge *g.Edge) float64 {
 	pheromone := math.Pow(edge.Pheromones, float64(a.alpha))
 	distance := edge.First.Position.DistanceTo(&edge.Second.Position)
+
 	return pheromone * math.Pow(1/distance, float64(a.beta))
 }

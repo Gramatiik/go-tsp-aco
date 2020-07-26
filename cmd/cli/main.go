@@ -9,10 +9,10 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
 
-	"github.com/Gramatiik/go-tsp-aco/aco"
-	"github.com/Gramatiik/go-tsp-aco/dataset"
-	"github.com/Gramatiik/go-tsp-aco/graph"
-	"github.com/Gramatiik/go-tsp-aco/tsplib"
+	"github.com/dzetah/go-tsp-aco/pkg/aco"
+	"github.com/dzetah/go-tsp-aco/pkg/dataset"
+	"github.com/dzetah/go-tsp-aco/pkg/graph"
+	"github.com/dzetah/go-tsp-aco/pkg/tsplib"
 )
 
 func main() {
